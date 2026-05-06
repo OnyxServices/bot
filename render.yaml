@@ -1,0 +1,20 @@
+services:
+  - type: worker          # Proceso en background (sin puerto HTTP)
+    name: monitor-pagos
+    runtime: python
+    plan: free            # Cambia a "starter" si necesitas que no duerma
+    buildCommand: pip install -r requirements.txt
+    startCommand: python buscar_correo.py
+    envVars:
+      - key: EMAIL_CUENTA
+        sync: false       # Se cargará manualmente en el Dashboard de Render
+      - key: EMAIL_PASSWORD
+        sync: false
+      - key: EMAIL_REMITENTE
+        sync: false
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: INTERVALO_BUSQUEDA
+        value: "10"       # Opcional: puedes cambiarlo desde el Dashboard
